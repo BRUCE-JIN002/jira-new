@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
+export const isVoid = (value: unknown) =>
+	value === undefined || value === null || value === "";
 
 // 在一个函数里，改变传入的对象本身是不好的
-export const cleanObject = (object: object) => {
+export const cleanObject = (object: { [key: string]: unknown }) => {
 	// Object.assign({}, object)
 	const result = { ...object };
 	Object.keys(result).forEach((key) => {
 		// @ts-ignore
 		const value = result[key];
-		if (isFalsy(value)) {
+		if (isVoid(value)) {
 			//@ts-ignore
 			delete result[key];
 		}
@@ -18,10 +20,11 @@ export const cleanObject = (object: object) => {
 };
 
 //自定义hook
-//在页面刚加载使执行一次的函数
+//在页面刚加载时执行一次的函数
 export const useMount = (callback: () => void) => {
 	useEffect(() => {
 		callback();
+		//TODO 依赖里加上callback会造成无限循环吗这个和useCallback和useMemo有关
 	}, []);
 };
 
@@ -53,4 +56,27 @@ export const useArray = <T>(initialArray: T[]) => {
 			setValue(copy);
 		},
 	};
+};
+
+//使用useRef改变页面标题
+export const useDocumentTitle = (
+	title: string,
+	keepOnUnmount: boolean = true
+) => {
+	//页面内加载时： 旧title
+	//加载后： 新title
+	const oldTitle = useRef(document.title).current;
+
+	useEffect(() => {
+		document.title = title;
+	}, [title]);
+
+	useEffect(() => {
+		return () => {
+			if (!keepOnUnmount) {
+				//如果不指定依赖， 读到的就是旧的title
+				document.title = oldTitle;
+			}
+		};
+	}, [oldTitle, keepOnUnmount]);
 };
