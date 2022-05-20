@@ -1,5 +1,6 @@
 import { stat } from "fs";
 import { useState } from "react";
+import { useMountedRef } from "utils";
 
 //统一处理异步逻辑的状态管理, loading 和 error的状态
 interface State<D> {
@@ -28,6 +29,10 @@ export const useAsync = <D>(
 		...defaultInitialState,
 		...initialState,
 	});
+	const mountedRef = useMountedRef();
+	//retry重新刷新页面
+	//useState直接传入函数的含义是：惰性初始化；所以，要用useState保存函数，不能直接传入函数
+	const [retry, setRetry] = useState(() => () => {});
 
 	//数据处理
 	const setData = (data: D) =>
@@ -46,14 +51,23 @@ export const useAsync = <D>(
 		});
 
 	//用来触发异步请求
-	const run = (promise: Promise<D>) => {
+	const run = (
+		promise: Promise<D>,
+		runConfig?: { retry: () => Promise<D> }
+	) => {
 		if (!promise || !promise.then) {
 			throw new Error("请传入 promise 类型的数据");
 		}
+		setRetry(() => () => {
+			//有runConfig的时候再执行
+			if (runConfig?.retry) run(runConfig?.retry(), runConfig);
+		});
 		setState({ ...state, stat: "loading" });
 		return promise
 			.then((data) => {
-				setData(data);
+				if (mountedRef.current) {
+					setData(data);
+				}
 				return data;
 			})
 			.catch((error) => {
@@ -72,6 +86,8 @@ export const useAsync = <D>(
 		run,
 		setData,
 		setError,
+		//retry 被调用时重新跑一遍 run, 让 state 刷新一遍
+		retry,
 		...state,
 	};
 };

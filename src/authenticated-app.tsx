@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { Avatar, FullPageNotFound, Row } from "components/lib";
 import { useAuth } from "./context/auth-context";
 import { ProjectListScreen } from "./screens/project-list";
-//已组件的方式引入logo
+//以组件的方式引入logo
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { Button, Dropdown, Menu } from "antd";
 import {
@@ -13,6 +13,7 @@ import {
 	Navigate,
 } from "react-router-dom";
 import { ProjectScreen } from "screens/project";
+import { restRoute } from "utils";
 
 export const AuthenticatedApp = () => {
 	return (
@@ -40,7 +41,9 @@ const PageHeader = () => {
 	return (
 		<Header between={true}>
 			<HeaderLeft gap={true}>
-				<SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+				<Button type="link" onClick={restRoute}>
+					<SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+				</Button>
 				<h2>项目</h2>
 				<h2>用户</h2>
 			</HeaderLeft>

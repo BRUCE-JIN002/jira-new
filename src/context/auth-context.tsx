@@ -1,5 +1,5 @@
 import { FullPageErrorFallback, FullPageLoading } from "components/lib";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useCallback, useState } from "react";
 import { useAsync } from "utils/use-async";
 import * as auth from "../auth-provider";
 import { User } from "../screens/project-list/search_panel";
@@ -54,10 +54,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	//登出
 	const logout = () => auth.logout().then(() => setUser(null));
 	//页面加载后调用一次
-	useMount(() => {
-		run(bootsrtapUser());
-	});
-
+	useMount(
+		useCallback(() => {
+			run(bootsrtapUser());
+		}, [])
+	);
 	if (isIdle || isLoading) {
 		return <FullPageLoading />;
 	}
