@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import styled from "@emotion/styled";
 import { Avatar, ButtonNoPadding, FullPageNotFound, Row } from "components/lib";
 import { useAuth } from "./context/auth-context";
@@ -14,74 +14,40 @@ import {
 } from "react-router-dom";
 import { ProjectScreen } from "screens/project";
 import { restRoute } from "utils";
-import { ProjectModalOpen } from "screens/project-list/project-modal";
+import { ProjectModal } from "screens/project-list/project-modal";
 import { ProjectPopover } from "components/project-popover";
-import { PlusCircleFilled } from "@ant-design/icons";
 
 export const AuthenticatedApp = () => {
-	const [projectModalOpen, setProjectModalOpen] = useState(false);
-
-	//组合组件
-	//创建项目的按钮1
-	const createProjectButton = (
-		<Button
-			type="primary"
-			style={{ backgroundColor: "rgb(38, 132, 255)", border: "none" }}
-			onClick={() => setProjectModalOpen(true)}
-		>
-			创建项目
-		</Button>
-	);
-	//创建项目的按钮1
-	const createProjectButton1 = (
-		<Button
-			type="primary"
-			style={{ backgroundColor: "rgb(38, 132, 255)", border: "none" }}
-			onClick={() => setProjectModalOpen(true)}
-		>
-			<PlusCircleFilled color="rgb(38, 132, 255)" />
-			创建项目
-		</Button>
-	);
-
 	return (
 		<Container>
-			<PageHeader projectButton={createProjectButton} />
-			<Main>
-				<Router>
+			<Router>
+				<PageHeader />
+				<Main>
 					<Routes>
 						<Route index element={<Navigate to="/projects" replace={true} />} />
-						<Route
-							path={"/projects"}
-							element={
-								<ProjectListScreen projectButton={createProjectButton1} />
-							}
-						/>
+						<Route path={"/projects"} element={<ProjectListScreen />} />
 						<Route
 							path={"/projects/:projectId/*"}
 							element={<ProjectScreen />}
 						/>
 						<Route path="*" element={<FullPageNotFound />} />
 					</Routes>
-				</Router>
-			</Main>
-			<ProjectModalOpen
-				projectModalOpen={projectModalOpen}
-				onClose={() => setProjectModalOpen(false)}
-			/>
+				</Main>
+				<ProjectModal />
+			</Router>
 		</Container>
 	);
 };
 
 //页眉模块
-const PageHeader = (props: { projectButton: JSX.Element }) => {
+const PageHeader = () => {
 	return (
 		<Header between={true}>
 			<HeaderLeft gap={true}>
 				<ButtonNoPadding type="link" onClick={restRoute}>
 					<SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
 				</ButtonNoPadding>
-				<ProjectPopover {...props} />
+				<ProjectPopover />
 				<span>用户</span>
 			</HeaderLeft>
 			<HeaderRight>
@@ -95,7 +61,7 @@ const PageHeader = (props: { projectButton: JSX.Element }) => {
 const User = () => {
 	const { logout, user } = useAuth();
 	return (
-		<>
+		<Fragment>
 			<Avatar />
 			<Dropdown
 				overlay={
@@ -110,7 +76,7 @@ const User = () => {
 			>
 				<a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
 			</Dropdown>
-		</>
+		</Fragment>
 	);
 };
 
@@ -120,7 +86,7 @@ const Container = styled.div`
 	height: 100vh;
 `;
 
-// grid-area 用来给grid子元素起名字
+// grid-area 用来给 grid子元素起名字
 const Header = styled(Row)`
 	padding: 3.2rem;
 	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);

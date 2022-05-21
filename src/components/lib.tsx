@@ -48,7 +48,7 @@ export const FullPageErrorFallback = ({ error }: { error: Error | null }) => {
 	return (
 		<FullPage>
 			<DevTools />
-			<Typography.Text type="danger">{error?.message}</Typography.Text>
+			<ErrorBox error={error} />
 		</FullPage>
 	);
 };
@@ -90,6 +90,17 @@ export const Avatar = () => {
 			/>
 		</span>
 	);
+};
+
+//类型守卫: 有信息时才返回
+const isError = (value: any): value is Error => value?.message;
+
+//ErrorBox 可以接受任意类型，只有当为真正的 Error 类型时，才显示 error.message
+export const ErrorBox = ({ error }: { error: unknown }) => {
+	if (isError(error)) {
+		return <Typography.Text type="danger">{error?.message}</Typography.Text>;
+	}
+	return null;
 };
 
 export const ButtonNoPadding = styled(Button)`
