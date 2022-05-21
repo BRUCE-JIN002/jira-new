@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "screens/project-list/search_panel";
 import * as auth from "auth-provider";
-import { AuthForm, bootsrtapUser } from "context/auth-context";
+import { AuthForm, bootstrapUser } from "context/auth-context";
 import { AppDispatch, RootState } from "strore";
 
 interface State {
@@ -38,4 +38,4 @@ export const logout = () => (dispatch: AppDispatch) =>
 	auth.logout().then(() => dispatch(setUser(null)));
 
 export const bootstrap = () => (dispatch: AppDispatch) =>
-	bootsrtapUser().then((user) => dispatch(setUser(user)));
+	bootstrapUser().then((user) => dispatch(setUser(user)));

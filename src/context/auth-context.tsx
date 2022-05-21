@@ -14,7 +14,7 @@ export interface AuthForm {
 	password: string;
 }
 
-export const bootsrtapUser = async () => {
+export const bootstrapUser = async () => {
 	let user = null;
 	const token = auth.getToken();
 	if (token) {
@@ -25,23 +25,13 @@ export const bootsrtapUser = async () => {
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-	const {
-		data: user,
-		error,
-		isLoading,
-		isIdle,
-		isError,
-		run,
-	} = useAsync<User | null>();
+	const { error, isLoading, isIdle, isError, run } = useAsync<User | null>();
+	const dispatch: (...args: any[]) => Promise<User> = useDispatch();
 
-	const dispatch: (...args: unknown[]) => Promise<User> = useDispatch();
+	useMount(() => {
+		run(dispatch(bootstrap()));
+	});
 
-	//页面加载后调用一次
-	useMount(
-		useCallback(() => {
-			run(dispatch(bootstrap()));
-		}, [])
-	);
 	if (isIdle || isLoading) {
 		return <FullPageLoading />;
 	}
@@ -50,13 +40,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		return <FullPageErrorFallback error={error} />;
 	}
 
-	//返回出来
 	return <div>{children}</div>;
 };
 
-//自定义hook
 export const useAuth = () => {
-	const dispatch: (...args: unknown[]) => Promise<User> = useDispatch();
+	const dispatch: (...args: any[]) => Promise<User> = useDispatch();
 	const user = useSelector(selectUser);
 	const login = useCallback(
 		(form: AuthForm) => dispatch(authStore.login(form)),
