@@ -91,3 +91,7 @@ export const Avatar = () => {
 		</span>
 	);
 };
+
+export const ButtonNoPadding = styled(Button)`
+	padding: 0;
+`;
