@@ -1,18 +1,24 @@
-import { Button, Drawer } from "antd";
 import React from "react";
+import { Button, Drawer } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { projectListAction, selectProjctModalOpen } from "./project-list.slice";
 
-export const ProjectModalOpen = (props: {
-	projectModalOpen: boolean;
-	onClose: () => void;
-}) => {
+export const ProjectModalOpen = () => {
+	//action分发
+	const dispatch = useDispatch();
+	//读取根状态树中模态框的状态
+	const projectModalOpen = useSelector(selectProjctModalOpen);
+
 	return (
 		<Drawer
-			visible={props.projectModalOpen}
+			title={"Project Modal"}
+			visible={projectModalOpen}
 			width={"100%"}
-			onClose={props.onClose}
+			onClose={() => dispatch(projectListAction.closeProjectModal())}
 		>
-			<h1>Project Modal</h1>
-			<Button onClick={props.onClose}>关闭</Button>
+			<Button onClick={() => dispatch(projectListAction.closeProjectModal())}>
+				关闭
+			</Button>
 		</Drawer>
 	);
 };
