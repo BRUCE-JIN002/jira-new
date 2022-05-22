@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import styled from "@emotion/styled";
 import { Avatar, ButtonNoPadding, FullPageNotFound, Row } from "components/lib";
 import { useAuth } from "./context/auth-context";
@@ -62,19 +62,27 @@ const User = () => {
 	const { logout, user } = useAuth();
 	return (
 		<Fragment>
-			<Avatar />
 			<Dropdown
 				overlay={
 					<Menu>
+						<Menu.Item>
+							<Button type={"link"}>昵称: {user?.name}</Button>
+						</Menu.Item>
 						<Menu.Item key={"logout"}>
-							<Button type="link" onClick={logout}>
-								登出
+							<Button
+								type={"primary"}
+								onClick={logout}
+								style={{ backgroundColor: "rgb(38, 132, 255)", border: "none" }}
+							>
+								退出登录
 							</Button>
 						</Menu.Item>
 					</Menu>
 				}
 			>
-				<a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
+				<ButtonNoPadding type="link" onClick={(e) => e.preventDefault()}>
+					<Avatar />
+				</ButtonNoPadding>
 			</Dropdown>
 		</Fragment>
 	);
