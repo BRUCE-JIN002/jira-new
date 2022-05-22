@@ -1,8 +1,6 @@
-import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
+import { QueryKey, useMutation, useQuery } from "react-query";
 import { Project } from "screens/project-list/list";
-import { useProjectsSearchParams } from "screens/project-list/util";
 import { useHttp } from "./http";
-import { useAsync } from "./use-async";
 import { useAddConfig, useEditConfig } from "./use-optimistic-option";
 
 //抽象项目获取的操作
@@ -38,6 +36,18 @@ export const useAddProject = (queryKey: QueryKey) => {
 				data: params,
 			}),
 		useAddConfig(queryKey)
+	);
+};
+
+//删除项目
+export const useDeleteProject = (queryKey: QueryKey) => {
+	const client = useHttp(); //触发http请求
+	return useMutation(
+		({ id }: { id: number }) =>
+			client(`projects/${id}`, {
+				method: "DELETE",
+			}),
+		useEditConfig(queryKey)
 	);
 };
 
