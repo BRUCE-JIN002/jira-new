@@ -17,6 +17,11 @@ export const useProjectsSearchParams = () => {
 	] as const;
 };
 
+export const useProjectsQueryKey = () => {
+	const [params] = useProjectsSearchParams();
+	return ["projects", params];
+};
+
 //使用 url 管理 projectModal的状态: 扮演状态管理器的功能
 export const useProjectModal = () => {
 	//读取键 "projectCreate" 的状态(参数)

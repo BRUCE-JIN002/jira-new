@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Pin } from "components/pin";
 import { useEditProject } from "utils/project";
 import { ButtonNoPadding } from "components/lib";
-import { useProjectModal } from "./util";
+import { useProjectModal, useProjectsQueryKey } from "./util";
 
 //TODO id改为number类型
 export interface Project {
@@ -23,8 +23,8 @@ interface ListProps extends TableProps<Project> {
 }
 
 export const List = ({ users, ...props }: ListProps) => {
-	//编辑项目
-	const { mutate } = useEditProject();
+	//收藏项目
+	const { mutate } = useEditProject(useProjectsQueryKey());
 	//获取编辑框的打开函数
 	const { open } = useProjectModal();
 	//得到收藏的项目
@@ -90,10 +90,10 @@ export const List = ({ users, ...props }: ListProps) => {
 								overlay={
 									<Menu>
 										<Menu.Item key={"edit"} onClick={editProject(project.id)}>
-											<ButtonNoPadding type={"link"}>编辑</ButtonNoPadding>
+											编辑
 										</Menu.Item>
 										<Menu.Item key={"delete"} onClick={open}>
-											<ButtonNoPadding type={"link"}>删除</ButtonNoPadding>
+											删除
 										</Menu.Item>
 									</Menu>
 								}

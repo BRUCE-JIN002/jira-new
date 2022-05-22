@@ -1,7 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
 import { Project } from "screens/project-list/list";
+import { useProjectsSearchParams } from "screens/project-list/util";
 import { useHttp } from "./http";
 import { useAsync } from "./use-async";
+import { useAddConfig, useEditConfig } from "./use-optimistic-option";
 
 //抽象项目获取的操作
 export const useProjects = (param?: Partial<Project>) => {
@@ -14,41 +16,33 @@ export const useProjects = (param?: Partial<Project>) => {
 };
 
 //编辑项目
-export const useEditProject = () => {
+export const useEditProject = (queryKey: QueryKey) => {
 	const client = useHttp();
-	const queryClient = useQueryClient();
 	return useMutation(
 		(params: Partial<Project>) =>
 			client(`projects/${params.id}`, {
 				method: "PATCH",
 				data: params,
 			}),
-		{
-			onSuccess: () => queryClient.invalidateQueries("projects"),
-		}
+		useEditConfig(queryKey)
 	);
 };
 
 //添加项目： 使用useMutation改写
-export const useAddProject = () => {
+export const useAddProject = (queryKey: QueryKey) => {
 	const client = useHttp(); //触发http请求
-	const queryClient = useQueryClient();
-
 	return useMutation(
 		(params: Partial<Project>) =>
 			client(`projects`, {
 				method: "POST",
 				data: params,
 			}),
-		{
-			//成功时刷新数据
-			onSuccess: () => queryClient.invalidateQueries("projects"),
-		}
+		useAddConfig(queryKey)
 	);
 };
 
 //获取项目详情
-export const useProject = (id: number) => {
+export const useProject = (id?: number) => {
 	const client = useHttp();
 	return useQuery(["project", { id }], () => client(`projects/${id}`), {
 		enabled: Boolean(id), //id不为空时才触发获取详情的请求
