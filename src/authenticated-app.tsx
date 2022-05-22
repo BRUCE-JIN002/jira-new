@@ -65,7 +65,7 @@ const User = () => {
 			<Dropdown
 				overlay={
 					<Menu>
-						<Menu.Item>
+						<Menu.Item key={"name"}>
 							<Button type={"link"}>昵称: {user?.name}</Button>
 						</Menu.Item>
 						<Menu.Item key={"logout"}>
