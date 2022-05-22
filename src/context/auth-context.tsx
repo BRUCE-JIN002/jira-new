@@ -3,7 +3,7 @@ import React, { ReactNode, useCallback, useState } from "react";
 import { useQueryClient } from "react-query";
 import { useAsync } from "utils/use-async";
 import * as auth from "../auth-provider";
-import { User } from "../screens/project-list/search_panel";
+import { User } from "../types/user";
 import { useMount } from "../utils";
 import { http } from "../utils/http";
 
