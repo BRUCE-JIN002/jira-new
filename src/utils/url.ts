@@ -28,6 +28,7 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
 	] as const;
 };
 
+//设置url参数
 export const useSetUrlSearchParam = () => {
 	const [searchParams, setSearchParam] = useSearchParams();
 	return (params: { [key in string]: unknown }) => {
