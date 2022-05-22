@@ -27,6 +27,12 @@ export const ProjectModal = () => {
 		});
 	};
 
+	//清空模态框里的存在的数据
+	const closeModal = () => {
+		form.resetFields();
+		close();
+	};
+
 	//重置表单
 	useEffect(() => {
 		form.setFieldsValue(editingProject);
@@ -37,7 +43,7 @@ export const ProjectModal = () => {
 			forceRender={true}
 			visible={projectModalOpen}
 			width={"100%"}
-			onClose={close}
+			onClose={closeModal}
 		>
 			<Container>
 				{isLoading ? (

@@ -1,5 +1,6 @@
 import { FullPageErrorFallback, FullPageLoading } from "components/lib";
 import React, { ReactNode, useCallback, useState } from "react";
+import { useQueryClient } from "react-query";
 import { useAsync } from "utils/use-async";
 import * as auth from "../auth-provider";
 import { User } from "../screens/project-list/search_panel";
@@ -43,6 +44,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		run,
 		setData: setUser,
 	} = useAsync<User | null>();
+
+	const queryClient = useQueryClient();
 	//登录
 	const login = (form: AuthForm) =>
 		auth.login(form).then((user) => setUser(user));
@@ -52,7 +55,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		auth.register(form).then((user) => setUser(user));
 
 	//登出
-	const logout = () => auth.logout().then(() => setUser(null));
+	const logout = () =>
+		auth.logout().then(() => {
+			setUser(null);
+			queryClient.clear(); //清除掉所有用 queryClient请求得到的数据
+		});
 	//页面加载后调用一次
 	useMount(
 		useCallback(() => {
