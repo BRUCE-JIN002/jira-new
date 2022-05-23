@@ -2,12 +2,11 @@ import React from "react";
 import { SearchPanel } from "./search_panel";
 import { List } from "./list";
 import { useDebounce, useDocumentTitle } from "../../utils";
-import styled from "@emotion/styled";
 import { Button, Typography } from "antd";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
 import { useProjectModal, useProjectsSearchParams } from "./util";
-import { ErrorBox, Row } from "components/lib";
+import { ErrorBox, Row, ScreenContainer } from "components/lib";
 import { PlusCircleFilled } from "@ant-design/icons";
 
 //基本类型，可以放到依赖组件里， 组件状可以放到依赖里，非组件状态的对象， 绝不可以放到依赖里
@@ -20,7 +19,7 @@ export const ProjectListScreen = () => {
 	const { open } = useProjectModal();
 
 	return (
-		<Container>
+		<ScreenContainer>
 			<Row between={true}>
 				<h1 style={{ paddingBottom: "2rem" }}>项目列表</h1>
 				<Button
@@ -36,12 +35,8 @@ export const ProjectListScreen = () => {
 			<SearchPanel users={users || []} param={param} setParam={setParam} />
 			<ErrorBox error={error} />
 			<List loading={isLoading} users={users || []} dataSource={list || []} />
-		</Container>
+		</ScreenContainer>
 	);
 };
 
 ProjectListScreen.whyDidYouRender = false;
-
-const Container = styled.div`
-	padding: 3.2rem;
-`;

@@ -65,9 +65,6 @@ const User = () => {
 			<Dropdown
 				overlay={
 					<Menu>
-						<Menu.Item key={"name"}>
-							<Button type={"link"}>昵称: {user?.name}</Button>
-						</Menu.Item>
 						<Menu.Item key={"logout"}>
 							<Button
 								type={"primary"}
@@ -81,6 +78,9 @@ const User = () => {
 				}
 			>
 				<ButtonNoPadding type="link" onClick={(e) => e.preventDefault()}>
+					<span style={{ marginTop: "1rem", marginRight: "1.2rem" }}>
+						Hi, {user?.name}
+					</span>
 					<Avatar />
 				</ButtonNoPadding>
 			</Dropdown>
@@ -102,4 +102,7 @@ const Header = styled(Row)`
 `;
 const HeaderLeft = styled(Row)``;
 const HeaderRight = styled.div``;
-const Main = styled.main``;
+const Main = styled.main`
+	display: flex;
+	overflow: hidden;
+`;
