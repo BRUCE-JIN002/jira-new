@@ -36,7 +36,7 @@ export const useAddTask = (queryKey: QueryKey) => {
 export const useTask = (id?: number) => {
 	const client = useHttp();
 
-	return useQuery(["tasks", { id }], () => client(`tasks/${id}`), {
+	return useQuery<Task>(["tasks", { id }], () => client(`tasks/${id}`), {
 		enabled: Boolean(id), //id不为空时才触发获取详情的请求
 	});
 };

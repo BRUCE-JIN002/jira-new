@@ -16,7 +16,6 @@ import { useUser } from "utils/user";
 import { Task } from "types/task";
 import { Mark } from "components/mark";
 import { useDeleteKanban } from "utils/kanban";
-import Item from "antd/lib/list/Item";
 import { Row } from "components/lib";
 
 export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
@@ -90,17 +89,18 @@ const MoreOption = ({ kanban }: { kanban: Kanban }) => {
 			cancelText: "取消",
 			title: "确定删除看板吗？",
 			onOk() {
-				return deleteKanban({ id: kanban.id });
+				return deleteKanban({ id: kanban.id }) || null;
 			},
 		});
 	};
+
 	const overlay = (
 		<Menu>
-			<Item>
+			<Menu.Item>
 				<Button type={"link"} onClick={startEdit}>
 					删除
 				</Button>
-			</Item>
+			</Menu.Item>
 		</Menu>
 	);
 

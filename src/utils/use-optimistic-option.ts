@@ -1,7 +1,6 @@
-//生成乐观更新的配置
-
 import { QueryKey, useQueryClient } from "react-query";
 
+//乐观更新的配置
 export const useConfig = (
 	queryKey: QueryKey,
 	callback: (target: any, old?: any[]) => any[]
@@ -18,7 +17,6 @@ export const useConfig = (
 			});
 			return { previousItems }; //用来处理回滚
 		},
-
 		//出错时回滚数据
 		onError(error: any, newItem: any, context: any) {
 			queryClient.setQueryData(queryKey, context.previousItems);
