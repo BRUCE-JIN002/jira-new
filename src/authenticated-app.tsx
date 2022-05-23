@@ -69,7 +69,10 @@ const User = () => {
 							<Button
 								type={"primary"}
 								onClick={logout}
-								style={{ backgroundColor: "rgb(38, 132, 255)", border: "none" }}
+								style={{
+									backgroundColor: "rgb(38, 132, 255)",
+									border: "none",
+								}}
 							>
 								退出登录
 							</Button>
