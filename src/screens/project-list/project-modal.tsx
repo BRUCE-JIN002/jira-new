@@ -61,7 +61,7 @@ export const ProjectModal = () => {
 							<Form.Item
 								label={"名称"}
 								name={"name"}
-								rules={[{ required: true, message: "请输入项目名" }]}
+								rules={[{ required: true, message: "请输入项目名称" }]}
 							>
 								<Input placeholder={"请输入项目名称"} />
 							</Form.Item>
@@ -70,7 +70,7 @@ export const ProjectModal = () => {
 								name={"organization"}
 								rules={[{ required: true, message: "请输入部门名" }]}
 							>
-								<Input placeholder={"请输入项部门"} />
+								<Input placeholder={"请输入部门名"} />
 							</Form.Item>
 							<Form.Item label={"负责人"} name={"personId"}>
 								<UserSelect defaultOptionName={"负责人"} />

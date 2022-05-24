@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Button, Result, Spin, Typography } from "antd";
 import { DevTools } from "jira-dev-tool";
-import { restRoute } from "utils";
+import { resetRoute } from "utils";
 
 //实现自动转换单位的行组件
 export const Row = styled.div<{
@@ -65,7 +65,7 @@ export const FullPageNotFound = () => {
 					<Button
 						type="primary"
 						style={{ backgroundColor: "rgb(38, 132, 255)", border: "none" }}
-						onClick={restRoute}
+						onClick={resetRoute}
 					>
 						Back Home
 					</Button>

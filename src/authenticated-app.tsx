@@ -13,9 +13,10 @@ import {
 	Navigate,
 } from "react-router-dom";
 import { ProjectScreen } from "screens/project";
-import { restRoute } from "utils";
+import { resetRoute } from "utils";
 import { ProjectModal } from "screens/project-list/project-modal";
 import { ProjectPopover } from "components/project-popover";
+import { UserPopover } from "components/user-popover";
 
 export const AuthenticatedApp = () => {
 	return (
@@ -44,11 +45,11 @@ const PageHeader = () => {
 	return (
 		<Header between={true}>
 			<HeaderLeft gap={true}>
-				<ButtonNoPadding type="link" onClick={restRoute}>
+				<ButtonNoPadding type="link" onClick={resetRoute}>
 					<SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
 				</ButtonNoPadding>
 				<ProjectPopover />
-				<span>用户</span>
+				<UserPopover />
 			</HeaderLeft>
 			<HeaderRight>
 				<User />
@@ -68,7 +69,10 @@ const User = () => {
 						<Menu.Item key={"logout"}>
 							<Button
 								type={"link"}
-								onClick={logout}
+								onClick={() => {
+									logout();
+									resetRoute();
+								}}
 								style={{
 									// backgroundColor: "rgb(38, 132, 255)",
 									border: "1px",

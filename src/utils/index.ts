@@ -82,7 +82,7 @@ export const useDocumentTitle = (
 };
 
 //重置路由
-export const restRoute = () => (window.location.href = window.location.origin);
+export const resetRoute = () => (window.location.href = window.location.origin);
 
 export const subset = <
 	O extends { [key in string]: unknown },

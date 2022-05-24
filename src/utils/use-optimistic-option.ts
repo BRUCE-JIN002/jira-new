@@ -54,7 +54,9 @@ export const useReorderKanbanConfig = (queryKey: QueryKey) =>
 //任务排序乐观更新的配置
 export const useReorderTaskConfig = (queryKey: QueryKey) =>
 	useConfig(queryKey, (target, old) => {
+		//乐观更新task序列中的位置
 		const orderedList = reorder({ list: old, ...target }) as Task[];
+		//由于task排序还可能涉及所属看板的改变， 所以所属的看板kanbanId也要改变
 		return orderedList.map((item) =>
 			item.id === target.fromId
 				? { ...item, kanbanId: target.toKanbanId }

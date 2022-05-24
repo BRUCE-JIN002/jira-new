@@ -62,7 +62,7 @@ export const List = ({ users, ...props }: ListProps) => {
 						return (
 							<span>
 								{project.created
-									? dayjs(project.created).format("YYYY-MM_DD")
+									? dayjs(project.created).format("YYYY-MM-DD")
 									: "无"}
 							</span>
 						);

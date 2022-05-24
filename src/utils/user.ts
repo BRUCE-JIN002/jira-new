@@ -1,17 +1,13 @@
-import { useEffect } from "react";
+import { useQuery } from "react-query";
 import { User } from "types/user";
-import { cleanObject } from "utils";
 import { useHttp } from "./http";
-import { useAsync } from "./use-async";
 
 //抽象获取所有用户的操作
 export const useUser = (param?: Partial<User>) => {
-	const { run, ...rest } = useAsync<User[]>();
 	const client = useHttp();
 
-	useEffect(() => {
-		run(client("users", { data: cleanObject(param || {}) }));
-	}, [param]);
-
-	return rest;
+	//["users", param] 里当 param 的值变化的时候就重新请求一遍
+	return useQuery<User[]>(["users", param], () =>
+		client("users", { data: param })
+	);
 };

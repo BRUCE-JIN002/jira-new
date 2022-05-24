@@ -18,10 +18,14 @@ export const ProjectScreen = () => {
 			<Aside>
 				<Menu mode={"inline"} selectedKeys={[routetype]}>
 					<Menu.Item key={"kanban"}>
-						<Link to={"kanban"}>看板</Link>
+						<Link to={"kanban"} replace={true}>
+							看板
+						</Link>
 					</Menu.Item>
 					<Menu.Item key={"epic"}>
-						<Link to={"epic"}>任务组</Link>
+						<Link to={"epic"} replace={true}>
+							任务组
+						</Link>
 					</Menu.Item>
 				</Menu>
 			</Aside>
@@ -59,4 +63,5 @@ const Container = styled.div`
 	display: grid;
 	grid-template-columns: 16rem 1fr;
 	overflow: hidden;
+	width: 100%;
 `;
