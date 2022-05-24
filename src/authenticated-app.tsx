@@ -67,11 +67,12 @@ const User = () => {
 					<Menu>
 						<Menu.Item key={"logout"}>
 							<Button
-								type={"primary"}
+								type={"link"}
 								onClick={logout}
 								style={{
-									backgroundColor: "rgb(38, 132, 255)",
-									border: "none",
+									// backgroundColor: "rgb(38, 132, 255)",
+									border: "1px",
+									borderColor: "rgb(38, 132, 255)",
 								}}
 							>
 								退出登录

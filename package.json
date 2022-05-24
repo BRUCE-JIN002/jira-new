@@ -20,6 +20,7 @@
     "dayjs": "^1.11.2",
     "jira-dev-tool": "^1.6.59",
     "react": "^18.1.0",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^18.1.0",
     "react-query": "^3.39.0",
     "react-router": "6",
@@ -53,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-beautiful-dnd": "^13.1.2",
     "@welldone-software/why-did-you-render": "^7.0.1",
     "json-server": "^0.17.0"
   },

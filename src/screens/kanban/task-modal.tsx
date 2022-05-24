@@ -12,7 +12,7 @@ const layout = {
 };
 
 export const TaskModal = () => {
-	const [form] = useForm();
+	const [form] = Form.useForm();
 
 	//获取task的操作方法和状态
 	const { editingTask, editingTaskId, close } = useTasksModal();
@@ -44,6 +44,7 @@ export const TaskModal = () => {
 			},
 		});
 	};
+
 	useEffect(() => {
 		form.setFieldsValue(editingTask);
 	}, [form, editingTask]);

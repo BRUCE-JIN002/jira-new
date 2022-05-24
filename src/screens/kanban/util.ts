@@ -18,6 +18,7 @@ export const useProjectInUrl = () => useProject(useProjectIdInUrl());
 export const useKanbanSearchParams = () => ({ projectId: useProjectIdInUrl() });
 //看板的queryKey
 export const useKanbansQueryKey = () => ["kanbans", useKanbanSearchParams()];
+
 //获取task为id的参数
 export const useTasksSearchParams = () => {
 	const [param] = useUrlQueryParam(["name", "typeId", "processorId", "tagId"]);
