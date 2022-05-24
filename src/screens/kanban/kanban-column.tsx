@@ -17,28 +17,45 @@ import { Task } from "types/task";
 import { Mark } from "components/mark";
 import { useDeleteKanban } from "utils/kanban";
 import { Row } from "components/lib";
+import { Drag, Drop, DropChild } from "components/drag-and-drop";
 
-export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
-	//获取所有的task
+export const KanbanColumn = React.forwardRef<
+	HTMLDivElement,
+	{ kanban: Kanban }
+>(({ kanban, ...props }, ref) => {
 	const { data: allTasks } = useTasks(useTasksSearchParams());
-	//过滤得到只属于本 column的 task
-	const tasks = allTasks?.filter((task) => task.id === kanban.id);
-
+	const tasks = allTasks?.filter((task) => task.kanbanId === kanban.id);
 	return (
-		<Container>
+		<Container {...props} ref={ref}>
+			<Row between={true}>
+				<h3>{kanban.name}</h3>
+				<MoreOption kanban={kanban} key={kanban.id} />
+			</Row>
 			<TasksContainer>
-				<Row between={true}>
-					<h3>{kanban.name}</h3>
-					<MoreOption kanban={kanban} key={kanban.id} />
-				</Row>
-				{tasks?.map((task) => (
-					<TaskCard key={task.id} task={task} />
-				))}
+				<Drop
+					type={"ROW"}
+					direction={"vertical"}
+					droppableId={String(kanban.id)}
+				>
+					<DropChild style={{ minHeight: "1rem" }}>
+						{tasks?.map((task, taskIndex) => (
+							<Drag
+								key={task.id}
+								index={taskIndex}
+								draggableId={"task" + task.id}
+							>
+								<div>
+									<TaskCard key={task.id} task={task} />
+								</div>
+							</Drag>
+						))}
+					</DropChild>
+				</Drop>
 				<CreateTask kanbanId={kanban.id} />
 			</TasksContainer>
 		</Container>
 	);
-};
+});
 
 //根据id的类型来渲染相应的task图标
 const TaskTypeIcon = ({ id }: { id: number }) => {

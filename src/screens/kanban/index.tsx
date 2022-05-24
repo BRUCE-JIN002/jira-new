@@ -84,7 +84,9 @@ export const useDragEnd = () => {
 					return;
 				}
 				const type = destination.index > source.index ? "after" : "before";
+				reorderKanban({ fromId, referenceId: toId, type });
 			}
+			//task排序
 			if (type === "ROW") {
 				const fromKanbanId = +source.droppableId;
 				const toKanbanId = +destination.droppableId;

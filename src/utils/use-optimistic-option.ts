@@ -47,11 +47,11 @@ export const useEditConfig = (queryKey: QueryKey) =>
 export const useAddConfig = (queryKey: QueryKey) =>
 	useConfig(queryKey, (target, old) => (old ? [...old, target] : []));
 
-//看板排序配置
+//看板排序乐观更新的配置
 export const useReorderKanbanConfig = (queryKey: QueryKey) =>
 	useConfig(queryKey, (target, old) => reorder({ list: old, ...target }));
 
-//任务排序配置
+//任务排序乐观更新的配置
 export const useReorderTaskConfig = (queryKey: QueryKey) =>
 	useConfig(queryKey, (target, old) => {
 		const orderedList = reorder({ list: old, ...target }) as Task[];
