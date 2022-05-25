@@ -22,6 +22,7 @@ export const List = ({ users, ...props }: ListProps) => {
 	return (
 		<Table
 			rowKey={"id"}
+			scroll={{ y: 560 }}
 			pagination={false}
 			columns={[
 				{

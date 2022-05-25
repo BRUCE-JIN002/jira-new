@@ -9,6 +9,7 @@ import { useTasks } from "utils/task";
 import { Link } from "react-router-dom";
 import { CreateEpic } from "./create-epic";
 import { Epic } from "types/epic";
+import { PlusOutlined } from "@ant-design/icons";
 
 export const EpicScreen = () => {
 	//获取当前项目project
@@ -36,13 +37,14 @@ export const EpicScreen = () => {
 	return (
 		<ScreenContainer>
 			<Row between={true}>
-				<h1>{currentProject.name}任务组</h1>
+				<h1>{currentProject?.name}任务组</h1>
 				<Button
 					type={"primary"}
 					style={{ backgroundColor: "rgb(38, 132, 255)", border: "none" }}
 					onClick={() => setEipcCreateOpen(true)}
 				>
-					创建任务组
+					<PlusOutlined />
+					新建任务组
 				</Button>
 			</Row>
 			<List
@@ -50,7 +52,7 @@ export const EpicScreen = () => {
 				dataSource={epics}
 				itemLayout={"vertical"}
 				renderItem={(epic) => (
-					<List.Item>
+					<List.Item key={epic.id}>
 						<List.Item.Meta
 							title={
 								<Row between={true}>
@@ -71,10 +73,9 @@ export const EpicScreen = () => {
 							{tasks
 								?.filter((task) => task.epicId === epic.id)
 								.map((task) => (
-									<div>
+									<div key={task.id}>
 										<Link
 											to={`projects/${currentProject?.id}/kanban?editingTaskId=${task.id}`}
-											key={task.id}
 											replace={true}
 										>
 											{task.name}
