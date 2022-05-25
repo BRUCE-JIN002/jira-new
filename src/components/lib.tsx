@@ -56,7 +56,7 @@ export const FullPageErrorFallback = ({ error }: { error: Error | null }) => {
 //全局404页面显示
 export const FullPageNotFound = () => {
 	return (
-		<FullPage>
+		<NotFoundContainer>
 			<Result
 				status="404"
 				title="404"
@@ -71,7 +71,7 @@ export const FullPageNotFound = () => {
 					</Button>
 				}
 			/>
-		</FullPage>
+		</NotFoundContainer>
 	);
 };
 //随机生成用户头像
@@ -112,4 +112,9 @@ export const ScreenContainer = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+`;
+
+const NotFoundContainer = styled.div`
+	padding-top: 6rem;
+	width: 100%;
 `;

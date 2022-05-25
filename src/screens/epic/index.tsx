@@ -6,12 +6,14 @@ import { useProjectInUrl } from "screens/kanban/util";
 import { useDeleteEpic, useEpics } from "utils/epic";
 import { useEpicSearchParams, useEpicsQueryKey } from "./utils";
 import { useTasks } from "utils/task";
-import { Link } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import { CreateEpic } from "./create-epic";
 import { Epic } from "types/epic";
 import { PlusOutlined } from "@ant-design/icons";
+import { useDocumentTitle } from "utils";
 
 export const EpicScreen = () => {
+	useDocumentTitle("任务组列表");
 	//获取当前项目project
 	const { data: currentProject } = useProjectInUrl();
 	//获取当前项目project的 epics
@@ -75,8 +77,7 @@ export const EpicScreen = () => {
 								.map((task) => (
 									<div key={task.id}>
 										<Link
-											to={`projects/${currentProject?.id}/kanban?editingTaskId=${task.id}`}
-											replace={true}
+											to={`../../projects/${currentProject?.id}/kanban?editingTaskId=${task.id}`}
 										>
 											{task.name}
 										</Link>
