@@ -8,18 +8,18 @@ import "antd/dist/antd.less";
 import { AppProvider } from "./context";
 
 const root = ReactDOM.createRoot(
-	document.getElementById("root") as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 
 loadServer(() => {
-	root.render(
-		<React.StrictMode>
-			<AppProvider>
-				<DevTools />
-				<App />
-			</AppProvider>
-		</React.StrictMode>
-	);
+  root.render(
+    <React.StrictMode>
+      <AppProvider>
+        <DevTools />
+        <App />
+      </AppProvider>
+    </React.StrictMode>
+  );
 });
 
 // If you want to start measuring performance in your app, pass a function
